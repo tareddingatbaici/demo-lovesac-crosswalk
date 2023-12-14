@@ -1,5 +1,11 @@
+.columns {
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
 .columns > div {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
 }
 
