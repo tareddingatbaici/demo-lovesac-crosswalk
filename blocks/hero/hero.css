@@ -1,5 +1,10 @@
 /* block specific CSS goes here */
 
+/* @TODO Move this into Card specific file when hooked up */
+.cards-container img {
+  width: 64px;
+}
+
 main .hero-container > div {
   max-width: unset;
 }
@@ -11,10 +16,6 @@ main .hero-container {
 main .hero {
   position: relative;
   padding: 32px;
-  /* height: 632px; */
-  height: auto;
-  /* width: 1440px; */
-  width: 100%;
 }
 
 main .hero h1 {
