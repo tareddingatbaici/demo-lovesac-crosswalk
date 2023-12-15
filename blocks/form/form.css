@@ -20,9 +20,6 @@ main .form input,
 main .form textarea,
 main .form select {
   border: solid 1px var(--bg-color-grey);
-  padding: var(--spacing-xxs) var(--spacing-xs);
-  width: 100%;
-  max-width: 50rem;
   box-sizing: border-box;
   border-radius: var(--input-border-radius);
   font-size: var(--type-body-s-size);
@@ -48,7 +45,7 @@ main .form label {
 }
 
 main .form label.required::after {
-  content: "*";
+  content: '*';
   color: var(--color-black);
   padding-left: var(--spacing-xxxs);
 }
@@ -119,7 +116,7 @@ main .form button {
   main .form {
     padding: var(--spacing-ml);
   }
-  
+
   main .form .field-wrapper {
     display: flex;
   }
@@ -127,4 +124,37 @@ main .form button {
   main .form label {
     width: 72%;
   }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: column;
+  justify-content: center;
+}
+
+.form-text-area-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-text-area-wrapper textarea {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  margin: 1rem auto;
+  --input-border-radius: 10px;
+  padding: 0.5rem;
+  width: 600px;
+  @media (max-width: 768px) {
+    width: 330px;
+  }
+}
+
+.form-submit-wrapper button {
+  margin: 0 auto;
+}
+
+.form {
+  margin: 2rem auto;
 }
