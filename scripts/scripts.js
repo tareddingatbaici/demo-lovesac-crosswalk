@@ -13,6 +13,8 @@ import {
   waitForLCP,
 } from './lib-franklin.js';
 
+import {getModal} from '../blocks/modal/modal.js';
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 /**
@@ -67,8 +69,35 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateExampleModals(main);
 }
-
+function decorateExampleModals(main) {
+  const simpleModalButton = main.querySelector('a[href="http://modal-demo.simple"]');
+  const customModalButton = main.querySelector('a[href="http://modal-demo.custom"]');
+  if(simpleModalButton) {
+      // Listens to the simple modal button
+      simpleModalButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        // Modals can be imported on-demand to prevent loading unnecessary code
+        const simpleModal = getModal('simple-modal', () => '<h2>Simple Modal Content</h2>');
+        simpleModal.showModal();
+      });
+  }
+  if(customModalButton) {
+      // Listens to the custom modal button
+      customModalButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const customModal = getModal('custom-modal', () => `
+          <h2>Custom Modal</h2>
+          <p>This is some content in the custom modal.</p>
+          <button name="close-modal">Close Modal</button>
+        `, (modal) => {
+          modal.querySelector('button[name="close-modal"]').addEventListener('click', () => modal.close());
+        });
+        customModal.showModal();
+      });
+  }
+}
 /**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
