@@ -161,6 +161,16 @@ header nav .nav-sections {
   background-color: var(--overlay-color);
 }
 
+/* Based on current google docs navigation approach */
+header nav .nav-sections ul:nth-child(odd) {
+  display: none;
+}
+
+header nav .nav-sections ul:nth-child(even) {
+  justify-content: space-between;
+  align-items: center;
+}
+
 header nav[aria-expanded="true"] .nav-sections {
   display: block;
   visibility: visible;
