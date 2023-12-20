@@ -13,6 +13,15 @@ footer .footer p {
   margin: 0;
 }
 
+footer .footer .icon-logo svg {
+  width: 300px;
+}
+
+footer .footer .icon {
+  width: auto;
+  height: auto;
+}
+
 ul {
   display: flex;
   gap: 2em;
