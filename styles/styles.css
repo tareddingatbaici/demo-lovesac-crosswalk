@@ -160,6 +160,10 @@ pre {
   overflow: scroll;
 }
 
+main {
+  margin-top: -4rem;
+}
+
 main pre {
   background-color: var(--overlay-background-color);
   padding: 1em;
