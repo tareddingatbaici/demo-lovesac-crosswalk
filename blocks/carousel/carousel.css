@@ -138,6 +138,7 @@ main .carousel-buttons button.selected {
   /* width: calc(25% - 23px); */
   max-width: 300px;
   font-size: 0;
+  padding: 2rem;
 }
 
 .configurable-carousel .product-item-info {
