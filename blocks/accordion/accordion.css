@@ -1,15 +1,27 @@
+:root {
+    --accordion-background-color: #00808c;
+    --accordion-color: #a7a7a7;
+    --accordion-title-color: #fff;
+    --accordion-title-padding: 12px;
+    --accordion-border-radius: 6px;
+    --accordion-border-color: #ddd;
+    --accoridon-border: 1px solid var(--accordion-border-color);
+    --accordion-content-background: #ddd;
+    --accordion-content-color: #56585a;
+}
+
 .accordion {
-    background: #00808c;
-    color: #a7a7a7;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    background: var(--accordion-background-color);
+    color: var(--accordion-color);
+    border: var(--accordion-border);
+    border-radius: var(--accordion-border-radius);
 }
 
 .item-title {
     cursor: pointer;
-    color: #fff;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+    color: var(--accordion-title-color);
+    padding: var(--accordion-title-color);
+    border-bottom: var(--accordion-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,12 +47,12 @@
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     padding: 12px;
-    background: #ddd;
-    border-bottom: 1px solid #ddd;
+    background: var(--accordion-content-background);
+    border-bottom: var(--accordion-border);
 }
 
 .item-content > div {
-    color: #56585a;
+    color: var(--accordion-content-color);
 }
 
 .item-title.open + .item-content {
