@@ -3,11 +3,13 @@
     --accordion-color: #57585a;
     --accordion-title-color: var(--accordion-color);
     --accordion-title-padding: 8px;
+    --accordion-title-font-size: 16px;
     --accordion-border-radius: 6px;
     --accordion-border-color: var(--accordion-color);
     --accordion-border: 1px solid var(--accordion-color);
     --accordion-content-background: #fff;
     --accordion-content-color: #56585a;
+    --accordion-content-font-size: 16px;
 }
 
 .accordion {
@@ -57,6 +59,7 @@
 
 .item-content > div {
     color: var(--accordion-content-color);
+    font-size: var(--accordion-content-font-size);
 }
 
 .item-title.open + .item-content {
@@ -65,4 +68,5 @@
 
 .item-title > div {
     margin-left: 0;
+    font-size: var(--accordion-title-font-size);
 }
