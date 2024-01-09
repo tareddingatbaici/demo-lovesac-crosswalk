@@ -1,26 +1,26 @@
 :root {
-    --accordion-background-color: #00808c;
-    --accordion-color: #a7a7a7;
-    --accordion-title-color: #fff;
-    --accordion-title-padding: 12px;
+    --accordion-background-color: none;
+    --accordion-color: #57585a;
+    --accordion-title-color: var(--accordion-color);
+    --accordion-title-padding: 8px;
     --accordion-border-radius: 6px;
-    --accordion-border-color: #ddd;
-    --accoridon-border: 1px solid var(--accordion-border-color);
-    --accordion-content-background: #ddd;
+    --accordion-border-color: var(--accordion-color);
+    --accordion-border: 1px solid var(--accordion-color);
+    --accordion-content-background: #fff;
     --accordion-content-color: #56585a;
 }
 
 .accordion {
     background: var(--accordion-background-color);
     color: var(--accordion-color);
-    border: var(--accordion-border);
+    /* border: var(--accordion-border); */
     border-radius: var(--accordion-border-radius);
 }
 
 .item-title {
     cursor: pointer;
     color: var(--accordion-title-color);
-    padding: var(--accordion-title-color);
+    padding: var(--accordion-title-padding);
     border-bottom: var(--accordion-border);
     display: flex;
     justify-content: space-between;
@@ -30,12 +30,16 @@
 .item-title::after {
     width: 10px;
     height: 10px;
-    border-bottom: 2px solid #fff;
-    border-right: 2px solid #fff;
+    border-bottom: 2px solid var(--accordion-title-color);
+    border-right: 2px solid var(--accordion-title-color);
     transform-origin: 75% 75%;
     transform: rotate(-45deg) translateY(-50%);
     transition: transform .1s ease;
     content: '';
+}
+
+.item-title.open {
+    border-bottom: none;
 }
 
 .item-title.open::after {
@@ -57,4 +61,8 @@
 
 .item-title.open + .item-content {
     display: grid;
+}
+
+.item-title > div {
+    margin-left: 0;
 }
