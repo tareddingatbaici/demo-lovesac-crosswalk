@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-cycle
+import { loadScript } from '../utils/utils.js';
 import { fetchPlaceholders, sampleRUM } from './lib-franklin.js';
 
 const placeholders = await fetchPlaceholders();
