@@ -1,13 +1,29 @@
+:root {
+    --accordion-background-color: none;
+    --accordion-color: #57585a;
+    --accordion-title-color: var(--accordion-color);
+    --accordion-title-padding: 8px;
+    --accordion-title-font-size: 16px;
+    --accordion-border-radius: 6px;
+    --accordion-border-color: var(--accordion-color);
+    --accordion-border: 1px solid var(--accordion-color);
+    --accordion-content-background: #fff;
+    --accordion-content-color: #56585a;
+    --accordion-content-font-size: 16px;
+}
+
 .accordion {
-    background: #EFEFEF;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    background: var(--accordion-background-color);
+    color: var(--accordion-color);
+    /* border: var(--accordion-border); */
+    border-radius: var(--accordion-border-radius);
 }
 
 .item-title {
     cursor: pointer;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+    color: var(--accordion-title-color);
+    padding: var(--accordion-title-padding);
+    border-bottom: var(--accordion-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,8 +32,8 @@
 .item-title::after {
     width: 10px;
     height: 10px;
-    border-bottom: 2px solid #a7a7a7;
-    border-right: 2px solid #a7a7a7;
+    border-bottom: 2px solid var(--accordion-title-color);
+    border-right: 2px solid var(--accordion-title-color);
     transform-origin: 75% 75%;
     transform: rotate(-45deg) translateY(-50%);
     transition: transform .1s ease;
@@ -25,7 +41,7 @@
 }
 
 .item-title.open {
-    background: #ddd;
+    border-bottom: none;
 }
 
 .item-title.open::after {
@@ -37,9 +53,20 @@
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     padding: 12px;
-    border-bottom: 1px solid #ddd;
+    background: var(--accordion-content-background);
+    border-bottom: var(--accordion-border);
+}
+
+.item-content > div {
+    color: var(--accordion-content-color);
+    font-size: var(--accordion-content-font-size);
 }
 
 .item-title.open + .item-content {
     display: grid;
+}
+
+.item-title > div {
+    margin-left: 0;
+    font-size: var(--accordion-title-font-size);
 }
