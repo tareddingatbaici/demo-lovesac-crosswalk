@@ -17,7 +17,7 @@ import {
 
 import {getModal} from '../blocks/modal/modal.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
+const LCP_BLOCKS = ['product-list-page']; // add your LCP blocks to the list
 const tabElementMap = {};
 /**
  * Builds hero block and prepends to main in a new section.
@@ -105,6 +105,28 @@ function decorateExampleModals(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
+  let pageType = 'CMS';
+  if (document.body.querySelector('main .product-details')) {
+    pageType = 'Product';
+  } else if (document.body.querySelector('main .product-list-page')) {
+    pageType = 'Category';
+  } else if (document.body.querySelector('main .commerce-cart')) {
+    pageType = 'Cart';
+  } else if (document.body.querySelector('main .commerce-checkout')) {
+    pageType = 'Checkout';
+  }
+  window.adobeDataLayer = window.adobeDataLayer || [];
+    window.adobeDataLayer.push({
+      pageContext: {
+        pageType,
+        pageName: document.title,
+        eventType: 'visibilityHidden',
+        maxXOffset: 0,
+        maxYOffset: 0,
+        minXOffset: 0,
+        minYOffset: 0,
+      },
+    });
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
