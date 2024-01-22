@@ -31,6 +31,10 @@ class ProductCard extends Component {
       image = product.images[0].url;
     }
 
+    if (product.small_image && product.small_image.url) {
+        image = product.small_image.url;
+    }
+
     if (!image) {
       return html`<div class="no-image"></div>`;
     }
@@ -46,11 +50,22 @@ class ProductCard extends Component {
     </picture>`;
   }
 
+  testPrint(product) {
+    console.log(product)
+  }
+
+  renderButton(category, product) {
+    if (category == "47") {
+        return html`<button onClick=${() => this.testPrint(product)} type="submit" title="Quick Add +" class="action primary fabric"><span>Quick Add +</span></button>`;
+    }
+    return html``;
+  }
+
   onProductClick(product) {
     window.adobeDataLayer.push({ event: 'search-product-click', eventInfo: { searchUnitId: 'searchUnitId', sku: product.sku } });
   }
 
-  render({ product, loading, index }) {
+  render({ category, product, loading, index }) {
     if (loading) {
       return html`
       <li>
@@ -81,12 +96,13 @@ class ProductCard extends Component {
           <a onClick=${() => this.onProductClick(product)} href="/products/${product.urlKey}/${product.sku.toLowerCase()}" dangerouslySetInnerHTML=${{__html: product.name}} />
         </div>
         <div class="price">${renderPrice(product, this.formatter.format, html, Fragment)}</div>
+        ${this.renderButton(category, product)}
       </li>`;
   }
 }
 
 const ProductList = ({
-  products, loading, currentPageSize,
+  category, products, loading, currentPageSize,
 }) => {
   if (loading) {
     return html`<div class="list">
@@ -102,7 +118,7 @@ const ProductList = ({
     </div>`;
   }
 
-  const gridItems = products.items.map((product, index) => html`<${ProductCard} key=${product.sku} product=${product} index=${index} />`);
+  const gridItems = products.items.map((product, index) => html`<${ProductCard} category=${category} key=${product.sku} product=${product} index=${index} />`);
   return html`<div class="list">
     <ol>
         ${gridItems}

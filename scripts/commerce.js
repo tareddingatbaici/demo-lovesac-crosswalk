@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export, import/no-cycle */
 import { getConfigValue } from './configs.js';
-
+import {fetchGraphQL} from './scripts.js'
 /* Common query fragments */
 
 const priceFieldsFragment = `fragment priceFields on ProductViewPrice {
@@ -188,85 +188,41 @@ ${priceFieldsFragment}`;
 
 /* Common functionality */
 
+//TODO removeQuery from function param
 export async function performCatalogServiceQuery(query, variables) {
-  /**const headers = {
-    'Content-Type': 'application/json',
-    'Magento-Environment-Id': await getConfigValue('commerce-environment-id'),
-    'Magento-Website-Code': await getConfigValue('commerce-website-code'),
-    'Magento-Store-View-Code': await getConfigValue('commerce-store-view-code'),
-    'Magento-Store-Code': await getConfigValue('commerce-store-code'),
-    'Magento-Customer-Group': await getConfigValue('commerce-customer-group'),
-    'x-api-key': await getConfigValue('commerce-x-api-key'),
-  };
-
-  const apiCall = new URL(await getConfigValue('commerce-endpoint'));
-  apiCall.searchParams.append('query', query.replace(/(?:\r\n|\r|\n|\t|[\s]{4})/g, ' ')
-    .replace(/\s\s+/g, ' '));
-  apiCall.searchParams.append('variables', variables ? JSON.stringify(variables) : null);
-
-  const response = await fetch(apiCall, {
-    method: 'GET',
-    headers,
-  });
-
-
-
-
-  if (!response.ok) {
-    return null;
-  }
-
-  const queryResponse = await response.json();
-
-  return queryResponse.data;*/
-  // spoofing the response for now
-    var currentPage = variables.currentPage;
-    var pageSize = variables.pageSize;
-    var startIndex = (currentPage - 1) * pageSize;
-    var endIndex = startIndex + pageSize;
-    var items = [];
-    for (var i = startIndex; i < endIndex; i++) {
-        var name = "Product " + i;
-        var amount = i + 100;
-        items.push(
-           {
-               "product": {
-                   "id": 2200
-               },
-               "productView": {
-                   "name": name,
-                   "sku": "test-e2e-configurable-del-var1604539412",
-                   "urlKey": null,
-                   "images": [{"url":"https://staging.lovesac.com/media/catalog/product/s/t/storage_seat_insert_standard_main_3.jpg"}],
-                   "__typename": "ComplexProductView",
-                   "priceRange": {
-                    "minimum": {"regular": {"amount":{"value":amount}},
-                      "final":{"amount":{"value":amount}}},
-                    "maximum": {"regular": {"amount":{"value":amount}},
-                     "final":{"amount":{"value":amount}}}
-                   }
-               }
-           }
-        );
-    }
-
-    var response = {
-                       "data": {
-                           "categories": [],
-                           "productSearch": {
-                               "facets": [],
-                               "items": items,
-                               "page_info": {
-                                   "current_page": 1,
-                                   "total_pages": 8,
-                                   "page_size": 12
-                               },
-                               "total_count": 95
-                           }
-                       }
-                   };
-
-    return response.data;
+      let query2 = `
+      {
+        products(filter: { category_id: { in: [${variables.categoryId}] } } ) {
+          items {
+            name
+            sku
+            url_key
+            stock_status
+            swatch_image
+            sub_title
+            small_image{
+                url
+                label
+            }
+            price_range {
+              minimum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+            }
+          }
+          total_count
+          page_info {
+            page_size
+          }
+        }
+      }
+      `;
+      let res = await fetchGraphQL(query2, {});
+      let json = await res.json();
+      return json.data;
 }
 
 export function getSignInToken() {
@@ -451,18 +407,23 @@ export async function loadCategory(state) {
     const response = await performCatalogServiceQuery(productSearchQuery(state.type === 'category'), variables);
 
 
+    var numPages = 1;
+    var totalProducts = response.products.total_count;
+    if (totalProducts) {
+        numPages = Math.ceil(totalProducts / response.products.page_info.page_size);
+    }
+
     // Parse response into state
     var state = {
-                      pages: Math.max(response.productSearch.page_info.total_pages, 1),
-                      products: {
-                        items: response.productSearch.items
-                          .map((product) => ({ ...product.productView, ...product.product }))
-                          .filter((product) => product !== null),
-                        total: response.productSearch.total_count,
-                      },
-                      category: response.categories?.[0] ?? {},
-                      facets: response.productSearch.facets.filter((facet) => facet.attribute !== 'categories'),
-                    };
+        pages: Math.max(numPages),
+            products: {
+                items: response.products.items
+                  .map((product) => ({ ...product, ...product.product }))
+                  .filter((product) => product !== null),
+                total: response.products.total_count,
+        },
+        category: response.categories?.[0] ?? {}
+    };
     return state;
   } catch (e) {
     console.error('Error loading products', e);

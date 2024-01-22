@@ -107,7 +107,7 @@ class ProductListPage extends Component {
       type,
       category: {
         name: headline,
-        id: category || null,
+        id: props.category || null,
       },
       sort,
       sortDirection,
@@ -293,7 +293,7 @@ class ProductListPage extends Component {
                            <button disabled=${state.loading} id="toggle-filters" onClick=${() => this.facetMenuRef.current.classList.toggle('active')}>Filters</button>
                            <button disabled=${state.loading} id="toggle-sortby" onClick=${() => this.sortMenuRef.current.classList.toggle('active')}>Sort By</button>
                          </div>
-                         <${ProductList} products=${state.products} disruptors=${state.disruptors} loading=${state.loading} currentPageSize=${state.currentPageSize} />
+                         <${ProductList} category=${props.category} products=${state.products} disruptors=${state.disruptors} loading=${state.loading} currentPageSize=${state.currentPageSize} />
                          <${Pagination}
                            pages=${state.pages}
                            currentPage=${state.currentPage}
