@@ -17,7 +17,12 @@ import {
 
 import {getModal} from '../blocks/modal/modal.js';
 
-const LCP_BLOCKS = ['product-list-page']; // add your LCP blocks to the list
+const LCP_BLOCKS = ['product-list-page',
+                     'product-details',
+                     'commerce-cart',
+                     'commerce-checkout',
+                     'commerce-account',
+                     'commerce-login']; // add your LCP blocks to the list
 const tabElementMap = {};
 /**
  * Builds hero block and prepends to main in a new section.

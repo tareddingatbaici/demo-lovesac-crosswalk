@@ -6,8 +6,8 @@ import htm from '../../scripts/htm.js';
 import {
   renderPrice,
 } from '../../scripts/commerce.js';
-
 const html = htm.bind(h);
+
 
 class ProductCard extends Component {
   constructor(props) {
@@ -18,6 +18,7 @@ class ProductCard extends Component {
     });
 
     this.baseProduct = props.product;
+    this.onAddToCart = this.onAddToCart.bind(this);
   }
 
   renderImage(loading = 'lazy') {
@@ -50,13 +51,15 @@ class ProductCard extends Component {
     </picture>`;
   }
 
-  testPrint(product) {
-    console.log(product)
-  }
+  onAddToCart = async () => {
+      const optionsUIDs = {};//Object.values(this.state.selection).map((option) => option.id);
+      const { cartApi } = await import('../../scripts/minicart/api.js');
+      cartApi.addToCart(this.baseProduct.sku, optionsUIDs, 1);
+  };
 
   renderButton(category, product) {
     if (category == "47") {
-        return html`<button onClick=${() => this.testPrint(product)} type="submit" title="Quick Add +" class="action primary fabric"><span>Quick Add +</span></button>`;
+        return html`<button onClick=${() => this.onAddToCart()} type="submit" title="Quick Add +" class="action primary fabric"><span>Quick Add +</span></button>`;
     }
     return html``;
   }

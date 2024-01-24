@@ -231,7 +231,7 @@ export function getSignInToken() {
 }
 
 export async function performMonolithGraphQLQuery(query, variables, GET = true, USE_TOKEN = false) {
-  const GRAPHQL_ENDPOINT = await getConfigValue('commerce-core-endpoint');
+  const GRAPHQL_ENDPOINT = 'https://staging.lovesac.com/graphql'; //await getConfigValue('commerce-core-endpoint');
 
   const headers = {
     'Content-Type': 'application/json',

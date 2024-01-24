@@ -291,7 +291,8 @@ export function decorateBlock(block) {
  * @param {Element} block The block element
  * @returns {object} The block config
  */
-export function readBlockConfig(block) {
+export function
+readBlockConfig(block) {
   const config = {};
   block.querySelectorAll(':scope > div').forEach((row) => {
     if (row.children) {
